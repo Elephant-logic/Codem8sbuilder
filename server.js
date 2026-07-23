@@ -62,6 +62,25 @@ const hostedBootstrap = String.raw`<script id="codem8s-hosted-runtime">
     } catch(e) {}
   }
 
+  function installAssetStudioLink(){
+    try {
+      if(byId('codem8sAssetStudioLink')) return;
+      var link = document.createElement('a');
+      link.id = 'codem8sAssetStudioLink';
+      link.href = '/asset-studio.html';
+      link.textContent = 'Asset Studio';
+      link.title = 'Create a coherent asset pack with exact project paths';
+      link.style.cssText = 'display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;padding:8px 10px;border-radius:9px;border:1px solid #344d6d;background:#12243b;color:#dcecff;font:750 12px Inter,system-ui,sans-serif;text-decoration:none';
+      var toolbar = document.querySelector('.toolbar');
+      var spacer = toolbar && toolbar.querySelector('.spacer');
+      if(toolbar) toolbar.insertBefore(link, spacer || toolbar.firstChild);
+      else {
+        var top = document.querySelector('.top');
+        if(top) top.appendChild(link);
+      }
+    } catch(e) {}
+  }
+
   async function dispatch(event){
     if(event && event.preventDefault) event.preventDefault();
     applyServerMarker();
@@ -78,6 +97,7 @@ const hostedBootstrap = String.raw`<script id="codem8s-hosted-runtime">
 
   function bind(){
     applyServerMarker();
+    installAssetStudioLink();
     var button = byId('build');
     if(!button) return false;
     button.onclick = dispatch;
